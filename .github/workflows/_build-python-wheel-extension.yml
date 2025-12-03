@@ -11,7 +11,7 @@ on:
       python_version:
         description: 'Python versions to use for building'
         required: true
-        type: number
+        type: string
 
 jobs:
   build_sdist:

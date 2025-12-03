@@ -12,8 +12,6 @@ on:
         description: 'Python versions to use for building'
         required: true
         type: string
-env:
-  PYTHON_VERSIONS: '["3.12","3.13","3.14"]'
 
 jobs:
   build_sdist:

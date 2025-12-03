@@ -12,7 +12,7 @@ on:
         description: 'Python versions to use for building'
         required: true
         type: string
-        default: '["3.11", "3.12", "3.13"]'
+        default: '["3.12", "3.13", "3.14"]'
 
 jobs:
   build_sdist:
@@ -64,9 +64,6 @@ jobs:
       matrix:
         buildplat:
           - ubuntu-latest
-          - macos-latest
-          - macos-15-intel
-          - windows-latest
         python: ${{ fromJSON(inputs.python_version) }}
 
     steps:
@@ -167,9 +164,6 @@ jobs:
       matrix:
         buildplat:
           - ubuntu-latest
-          - macos-latest
-          - macos-15-intel
-          - windows-latest
         python: ${{ fromJSON(inputs.python_version) }}
 
     steps:

@@ -12,6 +12,8 @@ on:
         description: 'Python versions to use for building'
         required: true
         type: string
+env:
+  PYTHON_VERSIONS: '["3.12","3.13","3.14"]'
 
 jobs:
   build_sdist:
@@ -63,7 +65,7 @@ jobs:
       matrix:
         buildplat:
           - ubuntu-latest
-        python: ${{ fromJSON('["3.12","3.13","3.14"]') }}
+        python: ${{ fromJSON(inputs.python_version||env.PYTHON_VERSIONS)}}
 
     steps:
       - name: Check out
@@ -163,7 +165,7 @@ jobs:
       matrix:
         buildplat:
           - ubuntu-latest
-        python: ${{ fromJSON(inputs.python_version) }}
+        python: ${{ fromJSON(inputs.python_version||env.PYTHON_VERSIONS) }}
 
     steps:
       - name: Check out

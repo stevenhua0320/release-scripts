@@ -11,8 +11,7 @@ on:
       python_version:
         description: 'Python versions to use for building'
         required: true
-        type: string
-        default: '["3.12", "3.13", "3.14"]'
+        type: number
 
 jobs:
   build_sdist:

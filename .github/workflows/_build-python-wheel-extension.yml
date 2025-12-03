@@ -65,7 +65,10 @@ jobs:
       matrix:
         buildplat:
           - ubuntu-latest
-        python: ${{ fromJSON(inputs.python_version||env.PYTHON_VERSIONS)}}
+        python:
+              - "3.12"
+              - "3.13"
+              - "3.14"
 
     steps:
       - name: Check out

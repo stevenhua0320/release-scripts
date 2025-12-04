@@ -27,7 +27,7 @@ jobs:
 
   python-extension:
     if: inputs.c_extension
-    uses: stevenhua0320/.github/workflows/_build-python-wheel-extension.yml@python-version
+    uses: ./.github/workflows/_build-python-wheel-extension.yml@python-version
     with:
       project: ${{ inputs.project }}
       python_version: ${{ inputs.python_version }}

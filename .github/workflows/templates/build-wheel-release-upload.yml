@@ -1,12 +1,23 @@
-name: Build Wheel, Release on GitHub/PyPI, and Deploy Docs
+name: Build Wheel and Release
 
+# Trigger on tag push or manual dispatch.
+# Tag and release privilege are verified inside the reusable workflow.
 on:
   workflow_dispatch:
   push:
     tags:
-      - "*" # Trigger on all tags initially, but tag and release privilege are verified in _build-wheel-release-upload.yml
+      - "*"
+
+# ── Release modality ──────────────────────────────────────────────────────────
+# Three options are provided below. Only ONE job should be active at a time.
+# The default (Option 1) publishes to GitHub, PyPI, and deploys docs.
+# To switch modality: comment out the active job and uncomment your preferred
+# option, then commit the change to main before tagging a release.
+# ─────────────────────────────────────────────────────────────────────────────
 
 jobs:
+  # Option 1 (default): Release to GitHub, publish to PyPI, and deploy docs.
+  # Suitable for public packages distributed via PyPI and/or conda-forge.
   build-release:
     uses: scikit-package/release-scripts/.github/workflows/_build-wheel-release-upload.yml@{{ VERSION/v0 }}
     with:
@@ -16,3 +27,27 @@ jobs:
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+  # Option 2: Release to GitHub and deploy docs, without publishing to PyPI.
+  # Suitable for public packages not yet on PyPI or using conda-forge only.
+  # To use: comment out Option 1 above and uncomment the lines below.
+  # build-release-no-pypi:
+  #   uses: scikit-package/release-scripts/.github/workflows/_build-release-github-no-pypi.yml@{{ VERSION/v0 }}
+  #   with:
+  #     project: {{ PROJECT/PROJECT_NAME }}
+  #     c_extension: {{ C_EXTENSION/false }}
+  #     maintainer_github_username: {{ MAINTAINER_GITHUB_USERNAME/username }}
+  #   secrets:
+  #     PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+  # Option 3: Release to GitHub with wheel zip attached as a release asset.
+  # Suitable for private packages not published on PyPI or conda-forge.
+  # The zip contains the wheel(s) and INSTRUCTIONS.txt for end-user install.
+  # To use: comment out Option 1 above and uncomment the lines below.
+  # build-release-private:
+  #   uses: scikit-package/release-scripts/.github/workflows/_build-release-github-private-pure.yml@{{ VERSION/v0 }}
+  #   with:
+  #     project: {{ PROJECT/PROJECT_NAME }}
+  #     maintainer_github_username: {{ MAINTAINER_GITHUB_USERNAME/username }}
+  #   secrets:
+  #     PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
